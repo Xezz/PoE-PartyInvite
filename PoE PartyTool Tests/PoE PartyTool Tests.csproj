@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA5BFDA4-C148-4E6E-8B3E-B8D02AFEF734}</ProjectGuid>
+    <ProjectGuid>{5FDF61CB-CC97-4F07-8FAD-862CB1D0F4E9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PoE_PartyInvite</RootNamespace>
-    <AssemblyName>PoE-PartyInvite</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>PoE_PartyTool_Tests</RootNamespace>
+    <AssemblyName>PoE PartyTool Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PoE_PartyTool\LogProcessing\LogFileParser.cs" />
+    <Compile Include="PoE_PartyTool\LogProcessing\LogFileReader.cs" />
+    <Compile Include="PoE_PartyTool\Utilities\PoEProcessWatcher.cs" />
+    <Compile Include="ReverseLineReader.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +58,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
