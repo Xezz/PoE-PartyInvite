@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PoE_PartyTool.LogProcessing
 {
-	class LogFileParser
+	public class LogFileParser
 	{
 		public string ParseLine(string line)
 		{
