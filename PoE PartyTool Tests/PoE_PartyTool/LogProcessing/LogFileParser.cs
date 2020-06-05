@@ -12,6 +12,5 @@ namespace PoE_PartyTool.LogProcessing
 		{
 			return line.Replace(" ", "_");
 		}
-
 	}
 }

@@ -18,26 +18,119 @@ namespace PoE_PartyTool_Tests
 		PoEProcessWatcher processWatcher = new PoEProcessWatcher();
 		LogFileReader logReader = new LogFileReader();
 		LogFileParser logParser = new LogFileParser();
-			   
-		private Timer aTimer = new Timer();
+
+		private bool isProcessPathSet = false;
+		private bool isCharacterNameSet = false;
+		private bool isLogPathSet = false;
+
+		private Timer startupTimer = new Timer();
+		private Timer keepAlive = new Timer();
+
+		private Timer debugTimer = new Timer();
 
 		public Form1()
 		{
 			InitializeComponent();
 
-			InitTimer();			
+			logReader.logFilePath = processWatcher.PoEProcessPath;
+
+			InitTimers();
 		}
 
-		private void InitTimer()
+		private void InitTimers()
 		{
-			aTimer.Tick += new EventHandler(OnTimedEvent);
-			aTimer.Enabled = false;
-			aTimer.Interval = 1000;
+			startupTimer.Tick += new EventHandler(OnTimedEvent_GetStartupEssencials);
+			startupTimer.Enabled = false;
+			startupTimer.Interval = 1000;
+			StartTimer(startupTimer);
 
-			StopTimer();
+			keepAlive.Tick += new EventHandler(OnTimedEvent_GetProcessAliveState);
+			keepAlive.Enabled = false;
+			keepAlive.Interval = 5000;
+			StartTimer(keepAlive);
+
+			debugTimer.Tick += new EventHandler(OnTimedEvent_DebugTimerMethod);
+			debugTimer.Enabled = false;
+			debugTimer.Interval = 1000;
+			StopTimer(debugTimer);
 		}
 
-		private void OnTimedEvent(Object source, EventArgs myEventArgs)
+		/// <summary>
+		/// Get PoE Process Path
+		/// Get logged character name
+		/// Get log file path
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="myEventArgs"></param>
+		private void OnTimedEvent_GetStartupEssencials(Object source, EventArgs myEventArgs)
+		{
+			PoEWindowState state = processWatcher.GetPoEWindowState();
+
+			if (state == PoEWindowState.NOT_FOUND)
+			{
+				processWatcher.UpdateProcessPath();
+				state = processWatcher.GetPoEWindowState();
+
+				if (state == PoEWindowState.NOT_FOUND)
+				{
+					return;
+				}
+			}
+
+			if (state == PoEWindowState.WINDOW_ACTIVE || state == PoEWindowState.WINDOW_INACTIVE)
+			{
+				//lbl_PoEFocus.Text = "PoE Active!";
+				if (isProcessPathSet == false)
+				{
+					if (processWatcher.PoEProcessPath != "" && processWatcher.PoEProcessPath.EndsWith(".exe"))
+					{
+						isProcessPathSet = true;
+					}
+					else
+					{
+						processWatcher.UpdateProcessPath();
+					}
+				}
+
+				if (isProcessPathSet == true && isLogPathSet == false)
+				{
+					if (logReader.logFilePath.EndsWith("logs\\Client.txt"))
+					{
+						isLogPathSet = true;
+					}
+					else
+					{
+						logReader.UpdateLogFilePath(processWatcher.PoEProcessPath);
+					}
+				}
+
+				// Todo: Add isCharacterNameSet checks
+			}
+			else if (state == PoEWindowState.NOT_FOUND)
+			{
+				lbl_PoEFocus.Text = "Process could not be found!";
+			}
+		}
+
+		private void OnTimedEvent_GetProcessAliveState(Object source, EventArgs myEventArgs)
+		{
+			processWatcher.UpdateProcessPath();
+			logReader.UpdateLogFilePath(processWatcher.PoEProcessPath);
+		}
+
+		private void StartTimer(Timer timer)
+		{
+			timer.Start();
+			timer.Enabled = true;
+		}
+
+		private void StopTimer(Timer timer)
+		{
+			timer.Stop();
+			timer.Enabled = false;
+		}
+
+		private void OnTimedEvent_DebugTimerMethod(Object source, EventArgs myEventArgs)
 		{
 			if (processWatcher.GetPoEWindowState() == PoEWindowState.WINDOW_ACTIVE)
 			{
@@ -52,18 +145,6 @@ namespace PoE_PartyTool_Tests
 				lbl_PoEFocus.Text = "Process could not be found!";
 			}
 		}
-
-		private void StartTimer()
-		{
-			aTimer.Start();
-			aTimer.Enabled = true;
-		}
-
-		private void StopTimer()
-		{
-			aTimer.Stop();
-			aTimer.Enabled = false;
-		}		
 
 		private void btn_ReadLine_Click(object sender, EventArgs e)
 		{
@@ -92,18 +173,18 @@ namespace PoE_PartyTool_Tests
 			if (cb_AutoFocusCheck.CheckState == CheckState.Checked)
 			{
 				btn_CheckFocus.Enabled = false;
-				if (aTimer.Enabled == false)
+				if (debugTimer.Enabled == false)
 				{
-					StartTimer();
+					StartTimer(debugTimer);
 				}
 			}
 			else
 			{
 				btn_CheckFocus.Enabled = true;
 
-				if (aTimer.Enabled == true)
+				if (debugTimer.Enabled == true)
 				{
-					StopTimer();
+					StopTimer(debugTimer);
 				}
 			}
 		}
