@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Management;
 
 namespace PoE_PartyTool.Utilities
@@ -16,7 +13,7 @@ namespace PoE_PartyTool.Utilities
 		NOT_FOUND = 404
 	}
 
-	class PoEProcessWatcher
+	public class PoEProcessWatcher
 	{
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
@@ -29,26 +26,10 @@ namespace PoE_PartyTool.Utilities
 		public int PoEProcessID = 0;
 		public string PoEProcessPath = "";
 
-		public PoEProcessWatcher()
-		{
-			//localByName = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("pathofexile")).ToArray(); // this only works in case the PoE process starts with "PathOfExile". in case the exe has been renamed in some other way, this wont work
-
-			//if (localByName.Length >= 1)
-			//{
-			//	PoEProcessID = localByName[0].Id;
-			//	PoEProcessPath = ProcessExecutablePath(localByName[0]);
-			//}
-		}
-
 		public PoEWindowState GetPoEWindowState()
 		{
-			// Get the PoE process
-			//Process[] localByName = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("pathofexile")).ToArray(); // this only works in case the PoE process starts with "PathOfExile". in case the exe has been renamed in some other way, this wont work
-
 			if (PoEProcessPath != "")
 			{
-				// Store the PoE process ID
-				//int PoEID = localByName[0].Id;
 				// Get currently active(focused) process
 				uint activeProcId = GetActiveProcessFileName();
 
@@ -84,6 +65,11 @@ namespace PoE_PartyTool.Utilities
 				PoEProcessID = 0;
 				PoEProcessPath = "";
 			}
+		}
+
+		internal bool IsProcessPathSet()
+		{
+			return PoEProcessPath != null && PoEProcessPath.EndsWith(".exe");
 		}
 
 		private uint GetActiveProcessFileName()

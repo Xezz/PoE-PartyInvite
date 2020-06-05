@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Data;
-using System.Linq;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 
 using PoE_PartyTool.Utilities;
@@ -32,14 +27,14 @@ namespace PoE_PartyTool_Tests
 		{
 			InitializeComponent();
 
-			logReader.logFilePath = processWatcher.PoEProcessPath;
+			logReader.LogFilePath = processWatcher.PoEProcessPath;
 
 			InitTimers();
 		}
 
 		private void InitTimers()
 		{
-			startupTimer.Tick += new EventHandler(OnTimedEvent_GetStartupEssencials);
+			startupTimer.Tick += new EventHandler(OnTimedEvent_GetStartupEssentials);
 			startupTimer.Enabled = false;
 			startupTimer.Interval = 1000;
 			StartTimer(startupTimer);
@@ -55,14 +50,7 @@ namespace PoE_PartyTool_Tests
 			StopTimer(debugTimer);
 		}
 
-		/// <summary>
-		/// Get PoE Process Path
-		/// Get logged character name
-		/// Get log file path
-		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="myEventArgs"></param>
-		private void OnTimedEvent_GetStartupEssencials(Object source, EventArgs myEventArgs)
+		private void OnTimedEvent_GetStartupEssentials(Object source, EventArgs myEventArgs)
 		{
 			PoEWindowState state = processWatcher.GetPoEWindowState();
 
@@ -79,10 +67,9 @@ namespace PoE_PartyTool_Tests
 
 			if (state == PoEWindowState.WINDOW_ACTIVE || state == PoEWindowState.WINDOW_INACTIVE)
 			{
-				//lbl_PoEFocus.Text = "PoE Active!";
-				if (isProcessPathSet == false)
+				if (!isProcessPathSet)
 				{
-					if (processWatcher.PoEProcessPath != "" && processWatcher.PoEProcessPath.EndsWith(".exe"))
+					if (processWatcher.IsProcessPathSet())
 					{
 						isProcessPathSet = true;
 					}
@@ -91,10 +78,9 @@ namespace PoE_PartyTool_Tests
 						processWatcher.UpdateProcessPath();
 					}
 				}
-
-				if (isProcessPathSet == true && isLogPathSet == false)
+				else if (!isLogPathSet)
 				{
-					if (logReader.logFilePath.EndsWith("logs\\Client.txt"))
+					if (logReader.IsLogFilePathSet())
 					{
 						isLogPathSet = true;
 					}

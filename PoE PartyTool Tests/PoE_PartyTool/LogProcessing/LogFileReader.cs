@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MiscUtil.IO; // ReverseLineReader
-
-using System.Configuration;
-using System.Collections.Specialized;
+using PoE_PartyTool.Utilities;
 
 namespace PoE_PartyTool.LogProcessing
 {
-	class LogFileReader
+	public class LogFileReader
 	{
-		public string logFilePath { get; set; }
-
-		public LogFileReader()
-		{
-
-		}
+		public string LogFilePath { get; set; }
 
 		public string ReadLastLineFromLogFile()
 		{
-			if (logFilePath.Length > 0)
+			if (LogFilePath.Length > 0)
 			{
-				using (Stream stream = File.Open(logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				using (Stream stream = File.Open(LogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
 					if (stream != null)
 					{
@@ -42,27 +30,20 @@ namespace PoE_PartyTool.LogProcessing
 
 		public void UpdateLogFilePath(string processPath)
 		{
-			if (processPath != "")
+			if (!string.IsNullOrEmpty(processPath))
 			{
-				string[] path = processPath.Split('\\');
-				int len = path.Length;
-
-				string p2 = "";
-
-				for (int i = 0; i < len - 1; i++)
-				{
-					p2 += path[i].ToString();
-					p2 += "\\";
-				}
-
-				p2 += "logs\\Client.txt";
-
-				logFilePath = p2;
+				int lastIndex = processPath.LastIndexOf("\\");
+				LogFilePath = processPath.Substring(0, lastIndex) + "\\logs\\Client.txt";
 			}
 			else
 			{
-				logFilePath = "";
+				LogFilePath = "";
 			}
+		}
+
+		public bool IsLogFilePathSet()
+		{
+			return LogFilePath.EndsWith("logs\\Client.txt");
 		}
 	}
 }
