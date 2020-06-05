@@ -14,6 +14,7 @@ namespace PoE_PartyTool_Tests
 {
 	public partial class Form1 : Form
 	{
+		// Todo Dependency Injection
 		PoEProcessWatcher processWatcher = new PoEProcessWatcher();
 		LogFileReader logReader = new LogFileReader();
 		LogFileParser logParser = new LogFileParser();
