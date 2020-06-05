@@ -1,25 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MiscUtil.IO; // ReverseLineReader
+using PoE_PartyTool.Utilities;
 
 namespace PoE_PartyTool.LogProcessing
 {
-	class LogFileReader
+	public class LogFileReader
 	{
+		public string LogFilePath { get; set; }
+
 		public string ReadLastLineFromLogFile()
 		{
-			using (Stream stream = File.Open(@"D:\Programme\SteamD\steamapps\common\Path of Exile\logs\Client.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+			if (LogFilePath.Length > 0)
 			{
-				ReverseLineReader line = new ReverseLineReader(() => stream); // create anonymous method to return Stream as Func<Stream>
+				using (Stream stream = File.Open(LogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				{
+					if (stream != null)
+					{
+						ReverseLineReader line = new ReverseLineReader(() => stream); // create anonymous method to return Stream as Func<Stream>
 
-				var last = line.Take(1);
+						var last = line.Take(1);
 
-				return string.Join(" ", last.ToArray());
+						return string.Join(" ", last.ToArray());
+					}
+				}
 			}
+
+			return "404 -> Logfile not found!";
+		}
+
+		public void UpdateLogFilePath(string processPath)
+		{
+			if (!string.IsNullOrEmpty(processPath))
+			{
+				int lastIndex = processPath.LastIndexOf("\\");
+				LogFilePath = processPath.Substring(0, lastIndex) + "\\logs\\Client.txt";
+			}
+			else
+			{
+				LogFilePath = "";
+			}
+		}
+
+		public bool IsLogFilePathSet()
+		{
+			return LogFilePath.EndsWith("logs\\Client.txt");
 		}
 	}
 }
