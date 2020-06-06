@@ -21,20 +21,21 @@ namespace PoE_PartyTool.Utilities
 		[DllImport("user32.dll")]
 		private static extern IntPtr GetForegroundWindow();
 
-		public Process[] localByName;
+		private Process[] localByName;
+        private string _poeProcessPath;
+        private int _poeProcessID;
+        public string PoEProcessPath { get => _poeProcessPath; set => _poeProcessPath = value; }
+        public int PoEProcessID { get => _poeProcessID; set => _poeProcessID = value; }
 
-		public int PoEProcessID = 0;
-		public string PoEProcessPath = "";
-
-		public PoEWindowState GetPoEWindowState()
+        public PoEWindowState GetPoEWindowState()
 		{
-			if (PoEProcessPath != "")
+			if (!string.IsNullOrEmpty(_poeProcessPath))
 			{
 				// Get currently active(focused) process
 				uint activeProcId = GetActiveProcessFileName();
 
 				// Check active process if it is PoE
-				if (activeProcId == PoEProcessID)
+				if (activeProcId == _poeProcessID)
 				{
 					// PoE running and in focus
 					return PoEWindowState.WINDOW_ACTIVE;
@@ -51,25 +52,28 @@ namespace PoE_PartyTool.Utilities
 			}
 		}
 
-		internal void UpdateProcessPath()
+		internal bool UpdateProcessPath()
 		{
 			localByName = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("pathofexile")).ToArray();
-
 			if (localByName.Length >= 1)
 			{
-				PoEProcessID = localByName[0].Id;
-				PoEProcessPath = ProcessExecutablePath(localByName[0]);
+				_poeProcessID = localByName[0].Id;
+                string currentPath = ProcessExecutablePath(localByName[0]);
+				bool hasPathChanged = currentPath != _poeProcessPath;
+                _poeProcessPath = currentPath;
+				return hasPathChanged;
 			}
 			else
 			{
-				PoEProcessID = 0;
-				PoEProcessPath = "";
+				_poeProcessID = 0;
+				_poeProcessPath = null;
+				return true;
 			}
 		}
 
 		internal bool IsProcessPathSet()
 		{
-			return PoEProcessPath != null && PoEProcessPath.EndsWith(".exe");
+			return _poeProcessPath != null && _poeProcessPath.EndsWith(".exe");
 		}
 
 		private uint GetActiveProcessFileName()

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PoE_PartyTool\Executors\InviteExecutor.cs" />
     <Compile Include="PoE_PartyTool\LogProcessing\LogFileParser.cs" />
     <Compile Include="PoE_PartyTool\LogProcessing\LogFileReader.cs" />
     <Compile Include="PoE_PartyTool\Utilities\PoEProcessWatcher.cs" />

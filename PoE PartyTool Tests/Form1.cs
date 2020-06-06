@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using PoE_PartyTool.Utilities;
 using PoE_PartyTool.LogProcessing;
+using PoE_PartyTool_Tests.PoE_PartyTool.Executors;
 
 namespace PoE_PartyTool_Tests
 {
@@ -11,8 +12,8 @@ namespace PoE_PartyTool_Tests
 	{
 		// Todo Dependency Injection
 		PoEProcessWatcher processWatcher = new PoEProcessWatcher();
-		LogFileReader logReader = new LogFileReader();
-		LogFileParser logParser = new LogFileParser();
+		LogFileReader logReader;
+		LogFileParser logParser;
 
 		private bool isProcessPathSet = false;
 		private bool isCharacterNameSet = false;
@@ -25,10 +26,9 @@ namespace PoE_PartyTool_Tests
 
 		public Form1()
 		{
+			logParser = new LogFileParser();
+			logReader = new LogFileReader(processWatcher.PoEProcessPath);
 			InitializeComponent();
-
-			logReader.LogFilePath = processWatcher.PoEProcessPath;
-
 			InitTimers();
 		}
 
@@ -39,7 +39,7 @@ namespace PoE_PartyTool_Tests
 			startupTimer.Interval = 1000;
 			StartTimer(startupTimer);
 
-			keepAlive.Tick += new EventHandler(OnTimedEvent_GetProcessAliveState);
+			keepAlive.Tick += new EventHandler(OnTimedEvent_CheckAndUpdateProcessState);
 			keepAlive.Enabled = false;
 			keepAlive.Interval = 5000;
 			StartTimer(keepAlive);
@@ -48,9 +48,32 @@ namespace PoE_PartyTool_Tests
 			debugTimer.Enabled = false;
 			debugTimer.Interval = 1000;
 			StopTimer(debugTimer);
+
+			var checkRegularlyLogAndSendMessageTimer = new Timer();
+			checkRegularlyLogAndSendMessageTimer.Enabled = false;
+			checkRegularlyLogAndSendMessageTimer.Interval = 250;
+			checkRegularlyLogAndSendMessageTimer.Tick += new EventHandler(OnTimedEvent_ReadLogAndMessage);
+			StartTimer(checkRegularlyLogAndSendMessageTimer);
 		}
 
-		private void OnTimedEvent_GetStartupEssentials(Object source, EventArgs myEventArgs)
+        private void OnTimedEvent_ReadLogAndMessage(object sender, EventArgs e)
+        {
+			if (PoEWindowState.WINDOW_ACTIVE == processWatcher.GetPoEWindowState())
+			{
+				var latestLines = logReader.GetLinesSinceLastKnownLine();
+				foreach (string line in latestLines)
+				{
+					string parsedLine = logParser.ParseLine(line);
+					
+					if (!string.IsNullOrEmpty(parsedLine))
+					{
+						new InviteExecutor().Execute(parsedLine);
+					}
+				}
+			}
+		}
+
+        private void OnTimedEvent_GetStartupEssentials(Object source, EventArgs myEventArgs)
 		{
 			PoEWindowState state = processWatcher.GetPoEWindowState();
 
@@ -86,7 +109,8 @@ namespace PoE_PartyTool_Tests
 					}
 					else
 					{
-						logReader.UpdateLogFilePath(processWatcher.PoEProcessPath);
+						logReader = new LogFileReader(processWatcher.PoEProcessPath);
+						isLogPathSet = logReader.IsLogFilePathSet();
 					}
 				}
 
@@ -98,10 +122,12 @@ namespace PoE_PartyTool_Tests
 			}
 		}
 
-		private void OnTimedEvent_GetProcessAliveState(Object source, EventArgs myEventArgs)
+		private void OnTimedEvent_CheckAndUpdateProcessState(Object source, EventArgs myEventArgs)
 		{
-			processWatcher.UpdateProcessPath();
-			logReader.UpdateLogFilePath(processWatcher.PoEProcessPath);
+			if (processWatcher.UpdateProcessPath())
+			{
+				logReader = new LogFileReader(processWatcher.PoEProcessPath);
+			}
 		}
 
 		private void StartTimer(Timer timer)
@@ -134,8 +160,13 @@ namespace PoE_PartyTool_Tests
 
 		private void btn_ReadLine_Click(object sender, EventArgs e)
 		{
-			var lastLine = logReader.ReadLastLineFromLogFile();
-			lbl_LastLine.Text = logParser.ParseLine(lastLine);
+			var lastLine = logReader.GetLinesSinceLastKnownLine();
+			var lines = "";
+			foreach(string line in lastLine)
+            {
+				lines += "\n" + logParser.ParseLine(line);
+			}
+			lbl_LastLine.Text = lines;
 		}
 
 		private void btn_CheckFocus_Click(object sender, EventArgs e)
