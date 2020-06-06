@@ -1,49 +1,64 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using PoE_PartyTool.Utilities;
 
 namespace PoE_PartyTool.LogProcessing
 {
 	public class LogFileReader
 	{
-		public string LogFilePath { get; set; }
+		private string lastKnownLine;
+		private string _logFilePath;
 
-		public string ReadLastLineFromLogFile()
-		{
-			if (LogFilePath.Length > 0)
+        public LogFileReader(string processPath)
+        {
+			if (!string.IsNullOrEmpty(processPath))
 			{
-				using (Stream stream = File.Open(LogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				int lastIndex = processPath.LastIndexOf("\\");
+				if (lastIndex >= 0)
+                {
+                    _logFilePath = processPath.Substring(0, lastIndex) + "\\logs\\Client.txt";
+                }
+			}
+		}
+
+        public IEnumerable<string> GetLinesSinceLastKnownLine()
+		{
+			if (!string.IsNullOrEmpty(_logFilePath))
+			{
+				using (Stream stream = File.Open(_logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
 					if (stream != null)
 					{
 						ReverseLineReader line = new ReverseLineReader(() => stream); // create anonymous method to return Stream as Func<Stream>
 
-						var last = line.Take(1);
+                        if (string.IsNullOrEmpty(lastKnownLine))
+                        {
+							var latestLine = line.Take(1).ToList();
+							lastKnownLine = latestLine.First();
+							return latestLine;
+						}
+                        var newChatLines = line.Take(15).ToList();
+						var indexOfLastKnownLine = newChatLines.IndexOf(lastKnownLine);
+						lastKnownLine = newChatLines.First();
+						if (indexOfLastKnownLine >= 0)
+						{
+                            return newChatLines.Take(indexOfLastKnownLine);
+						}
 
-						return string.Join(" ", last.ToArray());
+						return newChatLines;
 					}
 				}
 			}
 
-			return "404 -> Logfile not found!";
-		}
-
-		public void UpdateLogFilePath(string processPath)
-		{
-			if (!string.IsNullOrEmpty(processPath))
-			{
-				int lastIndex = processPath.LastIndexOf("\\");
-				LogFilePath = processPath.Substring(0, lastIndex) + "\\logs\\Client.txt";
-			}
-			else
-			{
-				LogFilePath = "";
-			}
+			return new List<string>{ "404 -> Logfile not found!" };
 		}
 
 		public bool IsLogFilePathSet()
 		{
-			return LogFilePath.EndsWith("logs\\Client.txt");
+			return !string.IsNullOrEmpty(_logFilePath) && _logFilePath.EndsWith("logs\\Client.txt");
 		}
 	}
 }
