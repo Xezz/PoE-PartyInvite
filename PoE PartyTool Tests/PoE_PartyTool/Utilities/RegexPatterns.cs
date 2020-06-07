@@ -1,6 +1,7 @@
 ﻿using PoE_PartyTool_Tests.PoE_PartyTool.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,7 +30,7 @@ namespace PoE_PartyTool_Tests.PoE_PartyTool.Utilities
         public static PartyRequest Matchregex(string line)
         {
             //Regex regex = new Regex(TheRealRegEx);
-            Regex regex = new Regex(@"(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2}) \d{9} [a-zA-Z0-9]{2,3} \[.*\] (&|#|@From |\$)(<.*> ){0,1}([^\s]+): (.+)");
+            Regex regex = new Regex(@"(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}) \d{9} [a-zA-Z0-9]{2,3} \[.*\] (&|#|@From |\$)(<.*> ){0,1}([^\s]+): (.+)");
             Match match = regex.Match(line);
             PartyRequest result = null;
             if (match.Success)
@@ -47,17 +48,14 @@ namespace PoE_PartyTool_Tests.PoE_PartyTool.Utilities
                  * 10 Message
                  * */
                 result = new PartyRequest();
-                result.GuildName = match.Groups[8].Captures[0].Value;
-                int year = Int32.Parse(match.Groups[1].Captures[0].Value);
-                int month = Int32.Parse(match.Groups[2].Captures[0].Value);
-                int day = Int32.Parse(match.Groups[3].Captures[0].Value);
-                int hour = Int32.Parse(match.Groups[4].Captures[0].Value);
-                int minute = Int32.Parse(match.Groups[5].Captures[0].Value);
-                int second = Int32.Parse(match.Groups[6].Captures[0].Value);
-                DateTime messageTime = new DateTime(year, month, day, hour, minute, second);
-                string source = match.Groups[7].Captures[0].Value;
-                string character = match.Groups[9].Captures[0].Value;
-                string message = match.Groups[10].Captures[0].Value;
+                string dateAsString = match.Groups[1].Captures[0].Value;
+                string datepattern = @"YYYY\/MM\/dd HH:mm:ss";
+                //DateTime messageTime = DateTime.ParseExact(dateAsString, datepattern, CultureInfo.InvariantCulture);
+                DateTime messageTime = DateTime.Parse(dateAsString);
+                string source = match.Groups[2].Captures[0].Value;
+                result.GuildName = match.Groups[3].Captures[0].Value;
+                string character = match.Groups[4].Captures[0].Value;
+                string message = match.Groups[5].Captures[0].Value;
                 result.CharacterName = character;
                 result.RequestDate = messageTime;
                 result.RequestSource = RequestSourceBuilder.FromString(source);
