@@ -50,6 +50,7 @@
     <Compile Include="PoE_PartyTool\Executors\InviteExecutor.cs" />
     <Compile Include="PoE_PartyTool\LogProcessing\LogFileParser.cs" />
     <Compile Include="PoE_PartyTool\LogProcessing\LogFileReader.cs" />
+    <Compile Include="PoE_PartyTool\Model\IExecutableRequest.cs" />
     <Compile Include="PoE_PartyTool\Model\PartyRequest.cs" />
     <Compile Include="PoE_PartyTool\Model\RequestSource.cs" />
     <Compile Include="PoE_PartyTool\Model\RequestSourceBuilder.cs" />

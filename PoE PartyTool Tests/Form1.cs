@@ -68,7 +68,7 @@ namespace PoE_PartyTool_Tests
 					{
 						if (request.RequestMessage == "!inv")
                         {
-							new InviteExecutor().Execute(request.CharacterName);
+							request.Execute();
                         }
 						lines += "\n" + request.RequestSource + "\t" + request.GuildName + request.CharacterName + ":\t" + request.RequestMessage + "\t";
 					}
