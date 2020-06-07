@@ -26,12 +26,12 @@ namespace PoE_PartyTool_Tests.PoE_PartyTool.Utilities
             + " " + IntermediatedPattern + " " + ClientInfoPattern + " " + ChannelPattern + GuildOrNonePattern
             + CharacterNamePattern + ColonPattern + MessagePattern;
 
-        public static PartyRequest matchregex(string line)
+        public static PartyRequest Matchregex(string line)
         {
             //Regex regex = new Regex(TheRealRegEx);
             Regex regex = new Regex(@"(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2}) \d{9} [a-zA-Z0-9]{2,3} \[.*\] (&|#|@From |\$)(<.*> ){0,1}([^\s]+): (.+)");
             Match match = regex.Match(line);
-            PartyRequest result = new PartyRequest();
+            PartyRequest result = null;
             if (match.Success)
             {
                 /*
@@ -44,8 +44,9 @@ namespace PoE_PartyTool_Tests.PoE_PartyTool.Utilities
                  * 7 Source
                  * 8 Guild (maybe null)
                  * 9 Character
-                 * 10Message
+                 * 10 Message
                  * */
+                result = new PartyRequest();
                 result.GuildName = match.Groups[8].Captures[0].Value;
                 int year = Int32.Parse(match.Groups[1].Captures[0].Value);
                 int month = Int32.Parse(match.Groups[2].Captures[0].Value);
@@ -61,19 +62,6 @@ namespace PoE_PartyTool_Tests.PoE_PartyTool.Utilities
                 result.RequestDate = messageTime;
                 result.RequestSource = RequestSourceBuilder.FromString(source);
                 result.RequestMessage = message;
-
-                /*for (int i = 1; i < match.Groups.Count; i++)
-                {
-                    Group g = match.Groups[i];
-                    Console.WriteLine("Group" + i + "='" + g + "'");
-                    CaptureCollection cc = g.Captures;
-
-                    for (int j = 0; j < cc.Count; j++)
-                    {
-                        Capture c = cc[j];
-                        System.Console.WriteLine("Capture" + j + "='" + c + "', Position=" + c.Index);
-                    }
-                }*/
             }
             return result;
         }

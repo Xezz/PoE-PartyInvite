@@ -59,15 +59,21 @@ namespace PoE_PartyTool_Tests
 			if (PoEWindowState.WINDOW_ACTIVE == processWatcher.GetPoEWindowState())
 			{
 				var latestLines = logReader.GetLinesSinceLastKnownLine();
+				var lines = "";
 				foreach (string line in latestLines)
 				{
-					string parsedLine = logParser.ParseLine(line);
+					var request = logParser.ParseLine(line);
 					
-					if (!string.IsNullOrEmpty(parsedLine))
+					if (request != null )
 					{
-						new InviteExecutor().Execute(parsedLine);
+						if (request.RequestMessage == "!inv")
+                        {
+							new InviteExecutor().Execute(request.CharacterName);
+                        }
+						lines += "\n" + request.RequestSource + "\t" + request.GuildName + request.CharacterName + ":\t" + request.RequestMessage + "\t";
 					}
 				}
+				lbl_LastLine.Text += lines;
 			}
 		}
 
@@ -108,7 +114,6 @@ namespace PoE_PartyTool_Tests
 			}
 		}
 
-		//Todo: debuging with this button does no longer work, the logParser returns "" a non command is found -> remove this debug functionality or edit it to work again
 		private void btn_ReadLine_Click(object sender, EventArgs e)
 		{
 			var lastLine = logReader.GetLinesSinceLastKnownLine();
@@ -116,7 +121,12 @@ namespace PoE_PartyTool_Tests
 
 			foreach(string line in lastLine)
             {
-				lines += "\n" + logParser.ParseLine(line);
+				var parsed = logParser.ParseLine(line);
+				if (parsed != null)
+                {
+
+					lines += "\n" +parsed.RequestSource + "\t" + parsed.GuildName + parsed.CharacterName + ":\t" + parsed.RequestMessage +"\t";
+                }
 			}
 			lbl_LastLine.Text = lines;
 		}

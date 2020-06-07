@@ -23,7 +23,7 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.Utilities
                 RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
             };
 
-            PartyRequest request = RegexPatterns.matchregex(line);
+            PartyRequest request = RegexPatterns.Matchregex(line);
 
             request.Should().BeEquivalentTo(expected);
         }
@@ -41,7 +41,7 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.Utilities
                 RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
             };
 
-            PartyRequest request = RegexPatterns.matchregex(line);
+            PartyRequest request = RegexPatterns.Matchregex(line);
 
             request.Should().BeEquivalentTo(expected);
         }
@@ -59,7 +59,7 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.Utilities
                 RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
             };
 
-            PartyRequest request = RegexPatterns.matchregex(line);
+            PartyRequest request = RegexPatterns.Matchregex(line);
 
             request.Should().BeEquivalentTo(expected);
         }
@@ -78,7 +78,7 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.Utilities
                 RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
             };
             
-            PartyRequest request = RegexPatterns.matchregex(line);
+            PartyRequest request = RegexPatterns.Matchregex(line);
 
             request.Should().BeEquivalentTo(expected);
         }
