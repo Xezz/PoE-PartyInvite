@@ -27,22 +27,23 @@ namespace PoE_PartyTool.Utilities
         public string PoEProcessPath { get => _poeProcessPath; set => _poeProcessPath = value; }
         public int PoEProcessID { get => _poeProcessID; set => _poeProcessID = value; }
 
+		public PoEProcessWatcher()
+		{
+			UpdateProcessPath();
+		}
+
         public PoEWindowState GetPoEWindowState()
 		{
 			if (!string.IsNullOrEmpty(_poeProcessPath))
 			{
-				// Get currently active(focused) process
-				uint activeProcId = GetActiveProcessFileName();
+				uint activeProcessId = GetActiveProcessID();
 
-				// Check active process if it is PoE
-				if (activeProcId == _poeProcessID)
+				if (activeProcessId == _poeProcessID)
 				{
-					// PoE running and in focus
 					return PoEWindowState.WINDOW_ACTIVE;
 				}
 				else
 				{
-					// PoE not in focus
 					return PoEWindowState.WINDOW_INACTIVE;
 				}
 			}
@@ -61,13 +62,22 @@ namespace PoE_PartyTool.Utilities
                 string currentPath = ProcessExecutablePath(localByName[0]);
 				bool hasPathChanged = currentPath != _poeProcessPath;
                 _poeProcessPath = currentPath;
+
 				return hasPathChanged;
 			}
 			else
 			{
-				_poeProcessID = 0;
-				_poeProcessPath = null;
-				return true;
+				if (!string.IsNullOrEmpty(_poeProcessPath))
+				{
+					_poeProcessID = 0;
+					_poeProcessPath = null;
+
+					return true;
+				}
+				else
+				{
+					return false;
+				}				
 			}
 		}
 
@@ -76,7 +86,7 @@ namespace PoE_PartyTool.Utilities
 			return _poeProcessPath != null && _poeProcessPath.EndsWith(".exe");
 		}
 
-		private uint GetActiveProcessFileName()
+		private uint GetActiveProcessID()
 		{
 			IntPtr hwnd = GetForegroundWindow();
 			uint pid;
@@ -89,9 +99,9 @@ namespace PoE_PartyTool.Utilities
 		{
 			try
 			{
-				return process.MainModule.FileName;
+				return process.MainModule.FileName; // This only works for x32 systems
 			}
-			catch
+			catch // this works for x64 systems
 			{
 				string query = "SELECT ExecutablePath, ProcessID FROM Win32_Process";
 				ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);

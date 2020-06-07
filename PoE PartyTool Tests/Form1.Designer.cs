@@ -33,7 +33,6 @@
 			this.btn_ReadLine = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.btn_CheckFocus = new System.Windows.Forms.Button();
 			this.cb_AutoFocusCheck = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
@@ -49,7 +48,7 @@
 			// lbl_PoEFocus
 			// 
 			this.lbl_PoEFocus.AutoSize = true;
-			this.lbl_PoEFocus.Location = new System.Drawing.Point(160, 131);
+			this.lbl_PoEFocus.Location = new System.Drawing.Point(151, 127);
 			this.lbl_PoEFocus.Name = "lbl_PoEFocus";
 			this.lbl_PoEFocus.Size = new System.Drawing.Size(36, 13);
 			this.lbl_PoEFocus.TabIndex = 1;
@@ -83,20 +82,12 @@
 			this.label2.TabIndex = 5;
 			this.label2.Text = "Is PoE Focused?";
 			// 
-			// btn_CheckFocus
-			// 
-			this.btn_CheckFocus.Location = new System.Drawing.Point(43, 116);
-			this.btn_CheckFocus.Name = "btn_CheckFocus";
-			this.btn_CheckFocus.Size = new System.Drawing.Size(85, 23);
-			this.btn_CheckFocus.TabIndex = 6;
-			this.btn_CheckFocus.Text = "Check Focus";
-			this.btn_CheckFocus.UseVisualStyleBackColor = true;
-			this.btn_CheckFocus.Click += new System.EventHandler(this.btn_CheckFocus_Click);
-			// 
 			// cb_AutoFocusCheck
 			// 
 			this.cb_AutoFocusCheck.AutoSize = true;
-			this.cb_AutoFocusCheck.Location = new System.Drawing.Point(18, 145);
+			this.cb_AutoFocusCheck.Checked = true;
+			this.cb_AutoFocusCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_AutoFocusCheck.Location = new System.Drawing.Point(12, 127);
 			this.cb_AutoFocusCheck.Name = "cb_AutoFocusCheck";
 			this.cb_AutoFocusCheck.Size = new System.Drawing.Size(133, 17);
 			this.cb_AutoFocusCheck.TabIndex = 8;
@@ -110,7 +101,6 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(786, 201);
 			this.Controls.Add(this.cb_AutoFocusCheck);
-			this.Controls.Add(this.btn_CheckFocus);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.btn_ReadLine);
@@ -130,7 +120,6 @@
 		private System.Windows.Forms.Button btn_ReadLine;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button btn_CheckFocus;
 		private System.Windows.Forms.CheckBox cb_AutoFocusCheck;
 	}
 }

@@ -20,7 +20,8 @@ namespace PoE_PartyTool.LogProcessing
 				if (lastIndex >= 0)
                 {
                     _logFilePath = processPath.Substring(0, lastIndex) + "\\logs\\Client.txt";
-                }
+					InitLastLogLineAsLastKnownLine();
+				}
 			}
 		}
 
@@ -56,6 +57,26 @@ namespace PoE_PartyTool.LogProcessing
 			return new List<string>{ "404 -> Logfile not found!" };
 		}
 
+		private void InitLastLogLineAsLastKnownLine()
+		{
+			if (!string.IsNullOrEmpty(_logFilePath))
+			{
+				using (Stream stream = File.Open(_logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				{
+					if (stream != null)
+					{
+						ReverseLineReader line = new ReverseLineReader(() => stream); // create anonymous method to return Stream as Func<Stream>
+
+						if (string.IsNullOrEmpty(lastKnownLine))
+						{
+							var latestLine = line.Take(1).ToList();
+							lastKnownLine = latestLine.First();
+						}
+					}
+				}
+			}
+		}
+			   
 		public bool IsLogFilePathSet()
 		{
 			return !string.IsNullOrEmpty(_logFilePath) && _logFilePath.EndsWith("logs\\Client.txt");
