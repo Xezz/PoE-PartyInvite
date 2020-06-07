@@ -49,14 +49,14 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.Utilities
         [Fact]
         public void GlobalChatPartyRequest_map_properPartyRequest()
         {
-            string line = "2020/06/06 09:53:54 399269953 acf [INFO Client 12872] #<#TDE> GSF_HeadHeralding: !inv";
+            string line = "2020/06/29 09:53:54 399269953 acf [INFO Client 12872] #<#TDE> GSF_HeadHeralding: !inv";
             var expected = new PartyRequest()
             {
                 CharacterName = "GSF_HeadHeralding",
                 GuildName = "<#TDE> ",
                 RequestMessage = "!inv",
                 RequestSource = RequestSource.GLOBAL,
-                RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
+                RequestDate = new DateTime(2020, 6, 29, 9, 53, 54)
             };
 
             PartyRequest request = RegexPatterns.Matchregex(line);
