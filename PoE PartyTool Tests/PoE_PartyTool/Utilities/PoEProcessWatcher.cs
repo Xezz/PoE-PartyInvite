@@ -21,18 +21,21 @@ namespace PoE_PartyTool.Utilities
 		[DllImport("user32.dll")]
 		private static extern IntPtr GetForegroundWindow();
 
+		[DllImport("user32.dll")]
+		public static extern int SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
+
 		private Process[] localByName;
-        private string _poeProcessPath;
-        private int _poeProcessID;
-        public string PoEProcessPath { get => _poeProcessPath; set => _poeProcessPath = value; }
-        public int PoEProcessID { get => _poeProcessID; set => _poeProcessID = value; }
+		private string _poeProcessPath;
+		private int _poeProcessID;
+		public string PoEProcessPath { get => _poeProcessPath; set => _poeProcessPath = value; }
+		public int PoEProcessID { get => _poeProcessID; set => _poeProcessID = value; }
 
 		public PoEProcessWatcher()
 		{
 			UpdateProcessPath();
 		}
 
-        public PoEWindowState GetPoEWindowState()
+		public PoEWindowState GetPoEWindowState()
 		{
 			if (!string.IsNullOrEmpty(_poeProcessPath))
 			{
@@ -59,9 +62,15 @@ namespace PoE_PartyTool.Utilities
 			if (localByName.Length >= 1)
 			{
 				_poeProcessID = localByName[0].Id;
-                string currentPath = ProcessExecutablePath(localByName[0]);
+				string currentPath = ProcessExecutablePath(localByName[0]);
 				bool hasPathChanged = currentPath != _poeProcessPath;
-                _poeProcessPath = currentPath;
+				_poeProcessPath = currentPath;
+
+				// Todo: it would be best to look for another fix for the VulkanRenderer problem, since its not 100% clear what this fix actually does to the PoE process
+				if (hasPathChanged)
+				{
+					VulkanRendererUIDisplayFix();
+				}
 
 				return hasPathChanged;
 			}
@@ -77,7 +86,7 @@ namespace PoE_PartyTool.Utilities
 				else
 				{
 					return false;
-				}				
+				}
 			}
 		}
 
@@ -119,6 +128,14 @@ namespace PoE_PartyTool.Utilities
 			}
 
 			return "";
+		}
+
+		private void VulkanRendererUIDisplayFix()
+		{
+			if (localByName[0] != null)
+			{
+				SetWindowLong(localByName[0].MainWindowHandle, -16, 0x10000000);
+			}
 		}
 	}
 }

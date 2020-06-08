@@ -148,5 +148,22 @@ namespace PoE_PartyTool_Tests
 				}
 			}
 		}
+
+		private void cb_ForceToForeground_CheckedChanged(object sender, EventArgs e)
+		{
+			if (cb_ForceToForeground.Checked)
+			{
+				this.TopMost = true;
+			}
+			else
+			{
+				this.TopMost = false;
+			}
+		}
+
+		private void trackBar1_Scroll(object sender, EventArgs e)
+		{
+			this.Opacity = Convert.ToDouble(slider_Opacity.Value) / 100;
+		}
 	}
 }
