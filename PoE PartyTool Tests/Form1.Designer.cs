@@ -34,6 +34,11 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.cb_AutoFocusCheck = new System.Windows.Forms.CheckBox();
+			this.cb_ForceToForeground = new System.Windows.Forms.CheckBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.slider_Opacity = new System.Windows.Forms.TrackBar();
+			this.label4 = new System.Windows.Forms.Label();
+			((System.ComponentModel.ISupportInitialize)(this.slider_Opacity)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lbl_LastLine
@@ -48,7 +53,7 @@
 			// lbl_PoEFocus
 			// 
 			this.lbl_PoEFocus.AutoSize = true;
-			this.lbl_PoEFocus.Location = new System.Drawing.Point(151, 127);
+			this.lbl_PoEFocus.Location = new System.Drawing.Point(151, 107);
 			this.lbl_PoEFocus.Name = "lbl_PoEFocus";
 			this.lbl_PoEFocus.Size = new System.Drawing.Size(36, 13);
 			this.lbl_PoEFocus.TabIndex = 1;
@@ -76,7 +81,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(15, 100);
+			this.label2.Location = new System.Drawing.Point(15, 85);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(88, 13);
 			this.label2.TabIndex = 5;
@@ -87,7 +92,7 @@
 			this.cb_AutoFocusCheck.AutoSize = true;
 			this.cb_AutoFocusCheck.Checked = true;
 			this.cb_AutoFocusCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_AutoFocusCheck.Location = new System.Drawing.Point(12, 127);
+			this.cb_AutoFocusCheck.Location = new System.Drawing.Point(12, 106);
 			this.cb_AutoFocusCheck.Name = "cb_AutoFocusCheck";
 			this.cb_AutoFocusCheck.Size = new System.Drawing.Size(133, 17);
 			this.cb_AutoFocusCheck.TabIndex = 8;
@@ -95,11 +100,55 @@
 			this.cb_AutoFocusCheck.UseVisualStyleBackColor = true;
 			this.cb_AutoFocusCheck.CheckedChanged += new System.EventHandler(this.cb_AutoFocusCheck_CheckedChanged);
 			// 
+			// cb_ForceToForeground
+			// 
+			this.cb_ForceToForeground.AutoSize = true;
+			this.cb_ForceToForeground.Location = new System.Drawing.Point(12, 172);
+			this.cb_ForceToForeground.Name = "cb_ForceToForeground";
+			this.cb_ForceToForeground.Size = new System.Drawing.Size(65, 17);
+			this.cb_ForceToForeground.TabIndex = 9;
+			this.cb_ForceToForeground.Text = "FORCE!";
+			this.cb_ForceToForeground.UseVisualStyleBackColor = true;
+			this.cb_ForceToForeground.CheckedChanged += new System.EventHandler(this.cb_ForceToForeground_CheckedChanged);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(15, 153);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(147, 13);
+			this.label3.TabIndex = 10;
+			this.label3.Text = "Force Overlay on top of PoE?";
+			// 
+			// slider_Opacity
+			// 
+			this.slider_Opacity.Location = new System.Drawing.Point(185, 169);
+			this.slider_Opacity.Maximum = 100;
+			this.slider_Opacity.Minimum = 25;
+			this.slider_Opacity.Name = "slider_Opacity";
+			this.slider_Opacity.Size = new System.Drawing.Size(104, 45);
+			this.slider_Opacity.TabIndex = 11;
+			this.slider_Opacity.Value = 100;
+			this.slider_Opacity.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(197, 154);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(43, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Opacity";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(786, 201);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.slider_Opacity);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.cb_ForceToForeground);
 			this.Controls.Add(this.cb_AutoFocusCheck);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -108,6 +157,7 @@
 			this.Controls.Add(this.lbl_LastLine);
 			this.Name = "Form1";
 			this.Text = "Form1";
+			((System.ComponentModel.ISupportInitialize)(this.slider_Opacity)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -121,6 +171,10 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.CheckBox cb_AutoFocusCheck;
+		private System.Windows.Forms.CheckBox cb_ForceToForeground;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TrackBar slider_Opacity;
+		private System.Windows.Forms.Label label4;
 	}
 }
 
