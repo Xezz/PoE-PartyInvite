@@ -21,6 +21,9 @@ namespace PoE_PartyTool.Utilities
 		[DllImport("user32.dll")]
 		private static extern IntPtr GetForegroundWindow();
 
+		[DllImport("user32.dll")]
+		public static extern int SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
+
 		private Process[] localByName;
         private string _poeProcessPath;
         private int _poeProcessID;
@@ -62,6 +65,12 @@ namespace PoE_PartyTool.Utilities
                 string currentPath = ProcessExecutablePath(localByName[0]);
 				bool hasPathChanged = currentPath != _poeProcessPath;
                 _poeProcessPath = currentPath;
+
+				// Todo: it would be best to look for another fix for the VulkanRenderer problem, since its not 100% clear what this fix actually does to the PoE process
+				if (hasPathChanged)
+				{
+					VulkanRendererUIDisplayFix();
+				}
 
 				return hasPathChanged;
 			}
@@ -119,6 +128,14 @@ namespace PoE_PartyTool.Utilities
 			}
 
 			return "";
+		}
+
+		private void VulkanRendererUIDisplayFix()
+		{
+			if (localByName[0] != null)
+			{
+				SetWindowLong(localByName[0].MainWindowHandle, -16, 0x10000000);
+			}
 		}
 	}
 }
