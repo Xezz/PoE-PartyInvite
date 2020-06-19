@@ -24,6 +24,8 @@ namespace PoE_PartyTool_Tests
 
 		private List<PoE_PartyTool.Model.PartyRequest> requestList;
 
+		private int selectedListItem = 0;
+
 		public Form1()
 		{			
 			InitializeComponent();
@@ -96,10 +98,11 @@ namespace PoE_PartyTool_Tests
 								lbl_requestCount.Text = requestList.Count.ToString();
 
 								// quick fix for if the list is empty. this way no extra timer is needed for the moment
-								if (lbl_currentNr.Text == "0")
+								if (requestList.Count == 1)
 								{
-									lbl_currentNr.Text = "1";
-									lbl_currentName.Text = requestList[1].CharacterName;
+									selectedListItem = 0;
+									lbl_currentNr.Text = (selectedListItem + 1).ToString();
+									lbl_currentName.Text = requestList[selectedListItem].CharacterName;
 								}
 							}
                         }
@@ -140,46 +143,42 @@ namespace PoE_PartyTool_Tests
 
 		private void btn_left_Click(object sender, EventArgs e)
 		{
-			int currentSelectedNr = Convert.ToInt32(lbl_currentNr.Text);
-
 			if (requestList.Count > 0)
 			{
-				if (currentSelectedNr == 1)
+				if (selectedListItem == 0)
 				{
-					currentSelectedNr = requestList.Count;
+					selectedListItem = requestList.Count;
 
-					lbl_currentName.Text = requestList[currentSelectedNr].CharacterName;
-					lbl_currentNr.Text = currentSelectedNr.ToString();
+					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
+					lbl_currentNr.Text = (selectedListItem + 1).ToString();
 				}
 				else
 				{
-					currentSelectedNr--;
+					selectedListItem--;
 
-					lbl_currentName.Text = requestList[currentSelectedNr].CharacterName;
-					lbl_currentNr.Text = currentSelectedNr.ToString();
+					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
+					lbl_currentNr.Text = (selectedListItem + 1).ToString();
 				}
 			}
 		}
 
 		private void btn_right_Click(object sender, EventArgs e)
 		{
-			int currentSelectedNr = Convert.ToInt32(lbl_currentNr.Text);
-
 			if (requestList.Count > 0)
 			{
-				if (currentSelectedNr == requestList.Count)
+				if (selectedListItem == requestList.Count)
 				{
-					currentSelectedNr = 1;
+					selectedListItem = 0;
 
-					lbl_currentName.Text = requestList[currentSelectedNr].CharacterName;
-					lbl_currentNr.Text = currentSelectedNr.ToString();
+					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
+					lbl_currentNr.Text = (selectedListItem + 1).ToString();
 				}
 				else
 				{
-					currentSelectedNr++;
+					selectedListItem++;
 
-					lbl_currentName.Text = requestList[currentSelectedNr].CharacterName;
-					lbl_currentNr.Text = currentSelectedNr.ToString();
+					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
+					lbl_currentNr.Text = (selectedListItem + 1).ToString();
 				}
 			}
 		}
@@ -188,11 +187,9 @@ namespace PoE_PartyTool_Tests
 		{
 			if (requestList.Count > 0)
 			{
-				int currentSelectedNr = Convert.ToInt32(lbl_currentNr.Text);
-
 				if (processWatcher.SetPoEToFocusWindow())
 				{
-					requestList[currentSelectedNr].Execute();
+					requestList[selectedListItem].Execute();
 
 					RemoveSelectedRequest();
 				}
@@ -208,27 +205,26 @@ namespace PoE_PartyTool_Tests
 		{
 			if (requestList.Count > 0)
 			{
-				int currentSelectedNr = Convert.ToInt32(lbl_currentNr.Text);
-
-				requestList.RemoveAt(currentSelectedNr);
-				lbl_requestCount.Text = "Pending: " + requestList.Count.ToString();
+				requestList.RemoveAt(selectedListItem);
+				lbl_requestCount.Text = requestList.Count.ToString();
 
 				if (requestList.Count == 0)
 				{ 
-					lbl_currentName.Text = "Empty";
+					lbl_currentName.Text = "None";
 					lbl_currentNr.Text = "0";
 
 					return;
 				}
 
-				if (currentSelectedNr <= requestList.Count)
+				if (selectedListItem < requestList.Count)
 				{
-					lbl_currentName.Text = requestList[currentSelectedNr].CharacterName;
+					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
 				}
 				else
 				{
-					lbl_currentName.Text = requestList[1].CharacterName;
-					lbl_currentNr.Text = "1";
+					selectedListItem = 0;
+					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
+					lbl_currentNr.Text = (selectedListItem + 1).ToString();
 				}
 			}
 		}
