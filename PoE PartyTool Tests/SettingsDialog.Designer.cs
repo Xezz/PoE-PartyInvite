@@ -43,6 +43,7 @@
 			this.btn_SetWindowPos = new System.Windows.Forms.Button();
 			this.btn_ResetWindowPos = new System.Windows.Forms.Button();
 			this.btn_CloseSettingsDialog = new System.Windows.Forms.Button();
+			this.btn_ShowHideXezzModeButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.slider_Opacity)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -112,9 +113,9 @@
 			// 
 			// btn_ShowHideTitleBar
 			// 
-			this.btn_ShowHideTitleBar.Location = new System.Drawing.Point(131, 69);
+			this.btn_ShowHideTitleBar.Location = new System.Drawing.Point(131, 60);
 			this.btn_ShowHideTitleBar.Name = "btn_ShowHideTitleBar";
-			this.btn_ShowHideTitleBar.Size = new System.Drawing.Size(122, 23);
+			this.btn_ShowHideTitleBar.Size = new System.Drawing.Size(156, 23);
 			this.btn_ShowHideTitleBar.TabIndex = 21;
 			this.btn_ShowHideTitleBar.Text = "Show/Hide Title Bar";
 			this.btn_ShowHideTitleBar.UseVisualStyleBackColor = true;
@@ -123,7 +124,7 @@
 			// lbl_WindowPosX
 			// 
 			this.lbl_WindowPosX.AutoSize = true;
-			this.lbl_WindowPosX.Location = new System.Drawing.Point(130, 136);
+			this.lbl_WindowPosX.Location = new System.Drawing.Point(130, 139);
 			this.lbl_WindowPosX.Name = "lbl_WindowPosX";
 			this.lbl_WindowPosX.Size = new System.Drawing.Size(17, 13);
 			this.lbl_WindowPosX.TabIndex = 22;
@@ -132,7 +133,7 @@
 			// lbl_WindowPosY
 			// 
 			this.lbl_WindowPosY.AutoSize = true;
-			this.lbl_WindowPosY.Location = new System.Drawing.Point(130, 162);
+			this.lbl_WindowPosY.Location = new System.Drawing.Point(130, 165);
 			this.lbl_WindowPosY.Name = "lbl_WindowPosY";
 			this.lbl_WindowPosY.Size = new System.Drawing.Size(17, 13);
 			this.lbl_WindowPosY.TabIndex = 23;
@@ -140,14 +141,14 @@
 			// 
 			// tb_WindowPosX
 			// 
-			this.tb_WindowPosX.Location = new System.Drawing.Point(153, 133);
+			this.tb_WindowPosX.Location = new System.Drawing.Point(153, 136);
 			this.tb_WindowPosX.Name = "tb_WindowPosX";
 			this.tb_WindowPosX.Size = new System.Drawing.Size(100, 20);
 			this.tb_WindowPosX.TabIndex = 24;
 			// 
 			// tb_WindowPosY
 			// 
-			this.tb_WindowPosY.Location = new System.Drawing.Point(153, 160);
+			this.tb_WindowPosY.Location = new System.Drawing.Point(153, 163);
 			this.tb_WindowPosY.Name = "tb_WindowPosY";
 			this.tb_WindowPosY.Size = new System.Drawing.Size(100, 20);
 			this.tb_WindowPosY.TabIndex = 25;
@@ -155,7 +156,7 @@
 			// lbl_WindowPosition
 			// 
 			this.lbl_WindowPosition.AutoSize = true;
-			this.lbl_WindowPosition.Location = new System.Drawing.Point(133, 117);
+			this.lbl_WindowPosition.Location = new System.Drawing.Point(133, 120);
 			this.lbl_WindowPosition.Name = "lbl_WindowPosition";
 			this.lbl_WindowPosition.Size = new System.Drawing.Size(86, 13);
 			this.lbl_WindowPosition.TabIndex = 26;
@@ -163,7 +164,7 @@
 			// 
 			// btn_SetWindowPos
 			// 
-			this.btn_SetWindowPos.Location = new System.Drawing.Point(259, 131);
+			this.btn_SetWindowPos.Location = new System.Drawing.Point(259, 134);
 			this.btn_SetWindowPos.Name = "btn_SetWindowPos";
 			this.btn_SetWindowPos.Size = new System.Drawing.Size(90, 23);
 			this.btn_SetWindowPos.TabIndex = 27;
@@ -173,7 +174,7 @@
 			// 
 			// btn_ResetWindowPos
 			// 
-			this.btn_ResetWindowPos.Location = new System.Drawing.Point(259, 160);
+			this.btn_ResetWindowPos.Location = new System.Drawing.Point(259, 163);
 			this.btn_ResetWindowPos.Name = "btn_ResetWindowPos";
 			this.btn_ResetWindowPos.Size = new System.Drawing.Size(90, 23);
 			this.btn_ResetWindowPos.TabIndex = 28;
@@ -189,13 +190,24 @@
 			this.btn_CloseSettingsDialog.Size = new System.Drawing.Size(88, 23);
 			this.btn_CloseSettingsDialog.TabIndex = 29;
 			this.btn_CloseSettingsDialog.Text = "Close Settings";
-			this.btn_CloseSettingsDialog.UseVisualStyleBackColor = true;			
+			this.btn_CloseSettingsDialog.UseVisualStyleBackColor = true;
+			// 
+			// btn_ShowHideXezzModeButton
+			// 
+			this.btn_ShowHideXezzModeButton.Location = new System.Drawing.Point(131, 89);
+			this.btn_ShowHideXezzModeButton.Name = "btn_ShowHideXezzModeButton";
+			this.btn_ShowHideXezzModeButton.Size = new System.Drawing.Size(156, 23);
+			this.btn_ShowHideXezzModeButton.TabIndex = 30;
+			this.btn_ShowHideXezzModeButton.Text = "Show/Hide XezzMode Button";
+			this.btn_ShowHideXezzModeButton.UseVisualStyleBackColor = true;
+			this.btn_ShowHideXezzModeButton.Click += new System.EventHandler(this.btn_ShowHideXezzModeButton_Click);
 			// 
 			// SettingsDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(368, 242);
+			this.Controls.Add(this.btn_ShowHideXezzModeButton);
 			this.Controls.Add(this.btn_CloseSettingsDialog);
 			this.Controls.Add(this.btn_ResetWindowPos);
 			this.Controls.Add(this.btn_SetWindowPos);
@@ -236,5 +248,6 @@
 		private System.Windows.Forms.Button btn_SetWindowPos;
 		private System.Windows.Forms.Button btn_ResetWindowPos;
 		private System.Windows.Forms.Button btn_CloseSettingsDialog;
+		private System.Windows.Forms.Button btn_ShowHideXezzModeButton;
 	}
 }

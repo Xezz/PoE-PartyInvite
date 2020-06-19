@@ -240,11 +240,6 @@ namespace PoE_PartyTool_Tests
 			}
 		}
 
-		private void ShowHideXezzModeButton()
-		{
-
-		}
-
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			settingsDialog = new SettingsDialog(this);

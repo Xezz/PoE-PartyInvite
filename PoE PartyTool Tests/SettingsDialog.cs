@@ -305,5 +305,17 @@ namespace PoE_PartyTool_Tests
 				mainDialogWindow.Location = newPoint;
 			}
 		}
+
+		private void btn_ShowHideXezzModeButton_Click(object sender, EventArgs e)
+		{
+			if (mainDialogWindow.cb_XezzMode.Visible)
+			{
+				mainDialogWindow.cb_XezzMode.Visible = false;
+			}
+			else
+			{
+				mainDialogWindow.cb_XezzMode.Visible = true;
+			}
+		}
 	}
 }
