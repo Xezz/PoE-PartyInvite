@@ -69,7 +69,6 @@ namespace PoE_PartyTool_Tests
 			if (PoEWindowState.WINDOW_ACTIVE == processWatcher.GetPoEWindowState())
 			{
 				var latestLines = logReader.GetLinesSinceLastKnownLine();
-				//var lines = "";
 				foreach (string line in latestLines)
 				{
 					var request = logParser.ParseLine(line);
@@ -132,18 +131,6 @@ namespace PoE_PartyTool_Tests
 		//Todo: this timer can be removed at some point, just used for testing reasons
 		private void OnTimedEvent_DebugTimerMethod(Object source, EventArgs myEventArgs)
 		{
-			//if (processWatcher.GetPoEWindowState() == PoEWindowState.WINDOW_ACTIVE)
-			//{
-			//	lbl_PoEFocus.Text = "PoE Active!";
-			//}
-			//else if (processWatcher.GetPoEWindowState() == PoEWindowState.WINDOW_INACTIVE)
-			//{
-			//	lbl_PoEFocus.Text = "PoE Inactive!";
-			//}
-			//else if (processWatcher.GetPoEWindowState() == PoEWindowState.NOT_FOUND)
-			//{
-			//	lbl_PoEFocus.Text = "Process could not be found!";
-			//}
 		}
 
 		private void trackBar1_Scroll(object sender, EventArgs e)
