@@ -7,7 +7,7 @@ namespace PoE_PartyTool.LogProcessing
 {
 	public class LogFileParser
 	{
-        private static readonly Regex regex = new Regex(@"(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}) \d{9} [a-zA-Z0-9]{2,3} \[.*\] (&|#|@From |\$)(<.*> ){0,1}([^\s]+): (.+)");
+        private static readonly Regex regex = new Regex(@"(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}) \d{9,} [a-zA-Z0-9]{2,3} \[.*\] (&|#|@From |\$)(<.*> ){0,1}([^\s]+): (.+)");
 
         public PartyRequest ParseLine(string line)
 		{
