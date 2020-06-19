@@ -65,6 +65,7 @@
 			// 
 			// btn_left
 			// 
+			this.btn_left.Enabled = false;
 			this.btn_left.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btn_left.Location = new System.Drawing.Point(83, 2);
 			this.btn_left.Name = "btn_left";
@@ -76,6 +77,7 @@
 			// 
 			// btn_right
 			// 
+			this.btn_right.Enabled = false;
 			this.btn_right.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btn_right.Location = new System.Drawing.Point(125, 2);
 			this.btn_right.Name = "btn_right";
@@ -87,6 +89,7 @@
 			// 
 			// btn_inv
 			// 
+			this.btn_inv.Enabled = false;
 			this.btn_inv.Location = new System.Drawing.Point(83, 31);
 			this.btn_inv.Name = "btn_inv";
 			this.btn_inv.Size = new System.Drawing.Size(75, 23);
@@ -97,6 +100,7 @@
 			// 
 			// btn_remove
 			// 
+			this.btn_remove.Enabled = false;
 			this.btn_remove.Location = new System.Drawing.Point(83, 57);
 			this.btn_remove.Name = "btn_remove";
 			this.btn_remove.Size = new System.Drawing.Size(75, 23);
@@ -128,9 +132,9 @@
 			this.lbl_currentName.AutoSize = true;
 			this.lbl_currentName.Location = new System.Drawing.Point(9, 89);
 			this.lbl_currentName.Name = "lbl_currentName";
-			this.lbl_currentName.Size = new System.Drawing.Size(245, 13);
+			this.lbl_currentName.Size = new System.Drawing.Size(33, 13);
 			this.lbl_currentName.TabIndex = 19;
-			this.lbl_currentName.Text = "GSF_Fluff_SomeLongAssNameForTestingPurpose";
+			this.lbl_currentName.Text = "None";
 			// 
 			// label1
 			// 

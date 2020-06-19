@@ -100,6 +100,11 @@ namespace PoE_PartyTool_Tests
 								// quick fix for if the list is empty. this way no extra timer is needed for the moment
 								if (requestList.Count == 1)
 								{
+									btn_inv.Enabled = true;
+									btn_remove.Enabled = true;
+									btn_left.Enabled = true;
+									btn_right.Enabled = true;
+
 									selectedListItem = 0;
 									lbl_currentNr.Text = (selectedListItem + 1).ToString();
 									lbl_currentName.Text = requestList[selectedListItem].CharacterName;
@@ -147,7 +152,7 @@ namespace PoE_PartyTool_Tests
 			{
 				if (selectedListItem == 0)
 				{
-					selectedListItem = requestList.Count;
+					selectedListItem = requestList.Count - 1;
 
 					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
 					lbl_currentNr.Text = (selectedListItem + 1).ToString();
@@ -176,6 +181,10 @@ namespace PoE_PartyTool_Tests
 				else
 				{
 					selectedListItem++;
+					if (selectedListItem >= requestList.Count)
+					{
+						selectedListItem = 0;
+					}
 
 					lbl_currentName.Text = requestList[selectedListItem].CharacterName;
 					lbl_currentNr.Text = (selectedListItem + 1).ToString();
@@ -212,6 +221,11 @@ namespace PoE_PartyTool_Tests
 				{ 
 					lbl_currentName.Text = "None";
 					lbl_currentNr.Text = "0";
+
+					btn_inv.Enabled = false;
+					btn_remove.Enabled = false;
+					btn_left.Enabled = false;
+					btn_right.Enabled = false;
 
 					return;
 				}
