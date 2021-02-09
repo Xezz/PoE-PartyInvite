@@ -16,6 +16,8 @@ namespace PoE_PartyTool_Tests
 		LogFileReader logReader;
 		LogFileParser logParser;
 
+		SettingsDialog settingsDialog;
+
 		private Timer runtimeCheckTimer = new Timer();
 		private Timer checkRegularlyLogAndSendMessageTimer = new Timer();
 		private Timer debugTimer = new Timer(); //Todo: this timer can be removed at some point, just used for testing reasons
@@ -141,11 +143,6 @@ namespace PoE_PartyTool_Tests
 		{
 		}
 
-		private void trackBar1_Scroll(object sender, EventArgs e)
-		{
-			this.Opacity = Convert.ToDouble(slider_Opacity.Value) / 100;
-		}
-
 		private void btn_left_Click(object sender, EventArgs e)
 		{
 			if (requestList.Count > 0)
@@ -241,6 +238,19 @@ namespace PoE_PartyTool_Tests
 					lbl_currentNr.Text = (selectedListItem + 1).ToString();
 				}
 			}
+		}
+
+		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			settingsDialog = new SettingsDialog(this);
+			if (settingsDialog.ShowDialog(this) == DialogResult.OK)
+			{
+			}
+			else
+			{
+			}
+
+			settingsDialog.Dispose();			
 		}
 	}
 }
