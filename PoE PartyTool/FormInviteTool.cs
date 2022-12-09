@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 using PoE_PartyTool.Utilities;
 using PoE_PartyTool.LogProcessing;
-using PoE_PartyTool_Tests.PoE_PartyTool.Executors;
+using PoE_PartyTool.PoE_PartyTool.Executors;
 using System.Collections.Generic;
 
-namespace PoE_PartyTool_Tests
+namespace PoE_PartyTool
 {
-	public partial class Form1 : Form
+	public partial class form_InviteTool : Form
 	{
 		// Todo Dependency Injection
 		PoEProcessWatcher processWatcher;
@@ -28,7 +28,7 @@ namespace PoE_PartyTool_Tests
 
 		private int selectedListItem = 0;
 
-		public Form1()
+		public form_InviteTool()
 		{			
 			InitializeComponent();
 

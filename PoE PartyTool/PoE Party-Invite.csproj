@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5FDF61CB-CC97-4F07-8FAD-862CB1D0F4E9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PoE_PartyTool_Tests</RootNamespace>
-    <AssemblyName>PoE PartyTool Tests</AssemblyName>
+    <RootNamespace>PoE_PartyTool</RootNamespace>
+    <AssemblyName>PoE PartyTool</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormInviteTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInviteTool.Designer.cs">
+      <DependentUpon>FormInviteTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="PoE_PartyTool\Executors\InviteExecutor.cs" />
     <Compile Include="PoE_PartyTool\LogProcessing\LogFileParser.cs" />
     <Compile Include="PoE_PartyTool\LogProcessing\LogFileReader.cs" />
@@ -57,12 +63,6 @@
     <Compile Include="PoE_PartyTool\Model\RequestSourceBuilder.cs" />
     <Compile Include="PoE_PartyTool\Utilities\PoEProcessWatcher.cs" />
     <Compile Include="PoE_PartyTool\Utilities\ReverseLineReader.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsDialog.cs">
@@ -71,8 +71,8 @@
     <Compile Include="SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormInviteTool.resx">
+      <DependentUpon>FormInviteTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

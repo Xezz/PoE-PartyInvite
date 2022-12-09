@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using PoE_PartyTool.LogProcessing;
-using PoE_PartyTool_Tests.PoE_PartyTool.Executors;
-using PoE_PartyTool_Tests.PoE_PartyTool.Model;
+using PoE_PartyTool.PoE_PartyTool.Executors;
+using PoE_PartyTool.PoE_PartyTool.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

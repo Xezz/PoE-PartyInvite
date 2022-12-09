@@ -1,6 +1,6 @@
-﻿namespace PoE_PartyTool_Tests
+﻿namespace PoE_PartyTool
 {
-	partial class Form1
+	partial class form_InviteTool
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -123,7 +123,7 @@
 			this.lbl_Pending.AutoSize = true;
 			this.lbl_Pending.Location = new System.Drawing.Point(12, 30);
 			this.lbl_Pending.Name = "lbl_Pending";
-			this.lbl_Pending.Size = new System.Drawing.Size(17, 13);
+			this.lbl_Pending.Size = new System.Drawing.Size(49, 13);
 			this.lbl_Pending.TabIndex = 20;
 			this.lbl_Pending.Text = "Pending:";
 			// 
@@ -132,7 +132,7 @@
 			this.lbl_Selected.AutoSize = true;
 			this.lbl_Selected.Location = new System.Drawing.Point(12, 57);
 			this.lbl_Selected.Name = "lbl_Selected";
-			this.lbl_Selected.Size = new System.Drawing.Size(17, 13);
+			this.lbl_Selected.Size = new System.Drawing.Size(52, 13);
 			this.lbl_Selected.TabIndex = 21;
 			this.lbl_Selected.Text = "Selected:";
 			// 
@@ -141,7 +141,7 @@
 			this.cb_XezzMode.AutoSize = true;
 			this.cb_XezzMode.Location = new System.Drawing.Point(164, 31);
 			this.cb_XezzMode.Name = "cb_XezzMode";
-			this.cb_XezzMode.Size = new System.Drawing.Size(42, 17);
+			this.cb_XezzMode.Size = new System.Drawing.Size(76, 17);
 			this.cb_XezzMode.TabIndex = 22;
 			this.cb_XezzMode.Text = "XezzMode";
 			this.cb_XezzMode.UseVisualStyleBackColor = true;
@@ -152,7 +152,7 @@
             this.settingsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(165, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(264, 24);
 			this.menuStrip1.TabIndex = 23;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -163,7 +163,7 @@
 			this.settingsToolStripMenuItem.Text = "Settings";
 			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
 			// 
-			// Form1
+			// form_InviteTool
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -180,8 +180,8 @@
 			this.Controls.Add(this.btn_left);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Name = "form_InviteTool";
+			this.Text = "Invite Tool";
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);

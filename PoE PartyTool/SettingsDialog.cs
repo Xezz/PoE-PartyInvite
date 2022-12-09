@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PoE_PartyTool_Tests
+namespace PoE_PartyTool
 {
 	public partial class SettingsDialog : Form
 	{
-		Form1 mainDialogWindow;
+		form_InviteTool mainDialogWindow;
 
-		public SettingsDialog(Form1 main)
+		public SettingsDialog(form_InviteTool main)
 		{
 			InitializeComponent();
 

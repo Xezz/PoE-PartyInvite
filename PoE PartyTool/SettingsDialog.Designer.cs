@@ -1,4 +1,4 @@
-﻿namespace PoE_PartyTool_Tests
+﻿namespace PoE_PartyTool
 {
 	partial class SettingsDialog
 	{
