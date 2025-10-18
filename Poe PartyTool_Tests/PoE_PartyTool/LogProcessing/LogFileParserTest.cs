@@ -22,14 +22,14 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.LogProcessing
         public void GuildChatPartyRequest_map_properPartyRequest()
         {
             string line = "2020/06/06 09:53:54 399269953 acf [INFO Client 12872] &<#TDE> GSF_HeadHeralding: !inv";
-            var expected = new PartyRequest(new InviteExecutor())
-            {
-                CharacterName = "GSF_HeadHeralding",
-                GuildName = "<#TDE>",
-                RequestMessage = "!inv",
-                RequestSource = RequestSource.GUILD,
-                RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
-            };
+            var expected = new PartyRequest(
+                executor: new InviteExecutor(),
+                requestDate: new DateTime(2020, 6, 6, 9, 53, 54),
+                requestSource: RequestSource.GUILD,
+                guildName: "<#TDE>",
+                characterName: "GSF_HeadHeralding",
+                requestMessage: "!inv"
+            );
 
             PartyRequest request = new LogFileParser().ParseLine(line);
 
@@ -40,16 +40,16 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.LogProcessing
         public void TradeChatPartyRequest_map_properPartyRequest()
         {
             string line = "2020/06/06 09:53:54 399269953 acf [INFO Client 12872] $<#TDE> GSF_HeadHeralding: !inv";
-            var expected = new PartyRequest(new InviteExecutor())
-            {
-                CharacterName = "GSF_HeadHeralding",
-                GuildName = "<#TDE>",
-                RequestMessage = "!inv",
-                RequestSource = RequestSource.TRADE,
-                RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
-            };
+			var expected = new PartyRequest(
+				executor: new InviteExecutor(),
+				requestDate: new DateTime(2020, 6, 6, 9, 53, 54),
+				requestSource: RequestSource.TRADE,
+				guildName: "<#TDE>",
+				characterName: "GSF_HeadHeralding",
+				requestMessage: "!inv"
+			);
 
-            PartyRequest request = new LogFileParser().ParseLine(line);
+			PartyRequest request = new LogFileParser().ParseLine(line);
 
             request.Should().BeEquivalentTo(expected);
         }
@@ -58,16 +58,16 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.LogProcessing
         public void GlobalChatPartyRequest_map_properPartyRequest()
         {
             string line = "2020/06/29 09:53:54 399269953 acf [INFO Client 12872] #<#TDE> GSF_HeadHeralding: !inv";
-            var expected = new PartyRequest(new InviteExecutor())
-            {
-                CharacterName = "GSF_HeadHeralding",
-                GuildName = "<#TDE>",
-                RequestMessage = "!inv",
-                RequestSource = RequestSource.GLOBAL,
-                RequestDate = new DateTime(2020, 6, 29, 9, 53, 54)
-            };
+			var expected = new PartyRequest(
+				executor: new InviteExecutor(),
+				requestDate: new DateTime(2020, 6, 6, 9, 53, 54),
+				requestSource: RequestSource.GLOBAL,
+				guildName: "<#TDE>",
+				characterName: "GSF_HeadHeralding",
+				requestMessage: "!inv"
+			);
 
-            PartyRequest request = new LogFileParser().ParseLine(line);
+			PartyRequest request = new LogFileParser().ParseLine(line);
 
             request.Should().BeEquivalentTo(expected);
         }
@@ -76,17 +76,16 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.LogProcessing
         public void WhisperPartyRequest_map_properPartyRequest()
         {
             string line = "2020/06/06 09:53:54 399269953 acf [INFO Client 12872] @From <#TDE> GSF_HeadHeralding: !inv";
+			var expected = new PartyRequest(
+				executor: new InviteExecutor(),
+				requestDate: new DateTime(2020, 6, 6, 9, 53, 54),
+				requestSource: RequestSource.WHISPER,
+				guildName: "<#TDE>",
+				characterName: "GSF_HeadHeralding",
+				requestMessage: "!inv"
+			);
 
-            var expected = new PartyRequest(new InviteExecutor())
-            {
-                CharacterName = "GSF_HeadHeralding",
-                GuildName = "<#TDE>",
-                RequestMessage = "!inv",
-                RequestSource = RequestSource.WHISPER,
-                RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
-            };
-
-            PartyRequest request = new LogFileParser().ParseLine(line);
+			PartyRequest request = new LogFileParser().ParseLine(line);
 
             request.Should().BeEquivalentTo(expected);
         }
@@ -95,17 +94,16 @@ namespace Poe_PartyTool_Test.PoE_PartyTool.LogProcessing
         public void WhisperPartyRequestOhneGilde_map_properPartyRequest()
         {
             string line = "2020/06/06 09:53:54 399269953 acf [INFO Client 12872] @From GSF_HeadHeralding: !inv 1234";
+			var expected = new PartyRequest(
+				executor: new InviteExecutor(),
+				requestDate: new DateTime(2020, 6, 6, 9, 53, 54),
+				requestSource: RequestSource.WHISPER,
+				guildName: "<#TDE>",
+				characterName: "GSF_HeadHeralding",
+				requestMessage: "!inv 1234"
+			);
 
-            var expected = new PartyRequest(new InviteExecutor())
-            {
-                CharacterName = "GSF_HeadHeralding",
-                GuildName = "",
-                RequestMessage = "!inv 1234",
-                RequestSource = RequestSource.WHISPER,
-                RequestDate = new DateTime(2020, 6, 6, 9, 53, 54)
-            };
-
-            PartyRequest request = new LogFileParser().ParseLine(line);
+			PartyRequest request = new LogFileParser().ParseLine(line);
 
             request.Should().BeEquivalentTo(expected);
         }
