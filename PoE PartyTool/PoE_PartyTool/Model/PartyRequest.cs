@@ -11,16 +11,24 @@ namespace PoE_PartyTool.PoE_PartyTool.Model
     {
         private readonly InviteExecutor executor;
 
-        public PartyRequest(InviteExecutor executor)
+        public PartyRequest(InviteExecutor executor, DateTime requestDate, RequestSource requestSource, string guildName, string characterName, string requestMessage)
         {
             this.executor = executor;
-        }
+            RequestDate = requestDate;
+            RequestSource = requestSource;
+            GuildName = guildName;
+            CharacterName = characterName;
+            RequestMessage = requestMessage;
+            
+        } // PartyRequest
 
-        public DateTime RequestDate { get; set; }
-        public RequestSource RequestSource { get; set; }
-        public string GuildName { get; set; }
-        public string CharacterName { get; set; }
-        public string RequestMessage { get; set; }
+        
+        public DateTime RequestDate { get; }
+        public RequestSource RequestSource { get; }
+        public string GuildName { get; }
+        public string CharacterName { get; }
+        public string RequestMessage { get; }
+
 
         public void Execute()
         {

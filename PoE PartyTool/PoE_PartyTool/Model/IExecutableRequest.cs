@@ -4,11 +4,11 @@ namespace PoE_PartyTool.PoE_PartyTool.Model
 {
     public interface IExecutableRequest
     {
-        string CharacterName { get; set; }
-        string GuildName { get; set; }
-        DateTime RequestDate { get; set; }
-        string RequestMessage { get; set; }
-        RequestSource RequestSource { get; set; }
+        string CharacterName { get; }
+        string GuildName { get; }
+        DateTime RequestDate { get; }
+        string RequestMessage { get; }
+        RequestSource RequestSource { get; }
         void Execute();
     }
 }

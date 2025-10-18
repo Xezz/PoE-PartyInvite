@@ -12,38 +12,22 @@ namespace PoE_PartyTool.LogProcessing
         public PartyRequest ParseLine(string line)
         {
             Match match = regex.Match(line);
-            PartyRequest result = null;
+
             if (match.Success)
             {
-                /**
-                 * 1 Year/Month/Day Hour:Minute:Seconds
-                 * 2 Source
-                 * 3 Guild (maybe null)
-                 * 4 Character
-                 * 5 Message
-                 * */
-                result = new PartyRequest(new InviteExecutor());
-                
-                //1
-                result.RequestDate = DateTime.Parse(match.Groups[1].Captures[0].Value);
-                //2
-                result.RequestSource = RequestSourceBuilder.FromString(match.Groups[2].Captures[0].Value);
-                //3
-                if (match.Groups[3].Length > 1)
-                {
-                    result.GuildName = match.Groups[3].Captures[0].Value.Trim();
-                }
-                else
-                {
-                    result.GuildName = "";
-                }  
-                //4
-                result.CharacterName = match.Groups[4].Captures[0].Value;
-                //5
-                result.RequestMessage = match.Groups[5].Captures[0].Value;
+                return new PartyRequest(
+                    executor: new InviteExecutor(),
+                    requestDate: DateTime.Parse(match.Groups[1].Captures[0].Value), // Year/Month/Day Hour:Minute:Seconds
+                    requestSource: RequestSourceBuilder.FromString(match.Groups[2].Captures[0].Value),
+                    guildName: match.Groups[3].Length > 1 ? match.Groups[3].Captures[0].Value.Trim() : string.Empty,
+                    characterName: match.Groups[4].Captures[0].Value,
+                    requestMessage: match.Groups[5].Captures[0].Value
+                );
             }
-            return result;
-        }
+
+            return null;
+
+        } // ParseLine
 
         /*
          * funktioniert auf der seite: https://regex101.com/ 
